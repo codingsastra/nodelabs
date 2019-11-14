@@ -47,6 +47,14 @@ app.post("/api/books",(req,res)=>{
     res.send(books);
 })
 
+app.delete("/api/books/:id",(req,res)=>{
+    var id=req.params.id;
+    var latestBooks=books.filter((book)=>{
+        return book.id!=id;
+    })
+    res.send(latestBooks)
+})
+
 app.listen(5000,()=>{
     console.log("Server is started")
 })
