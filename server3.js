@@ -55,6 +55,24 @@ app.delete("/api/books/:id",(req,res)=>{
     res.send(latestBooks)
 })
 
+app.put("/api/books/:id",(req,res)=>{
+    var id=req.params.id;
+
+    var currentBook=books.find((book)=>{
+        return book.id==id;
+    })
+
+    currentBook.author=req.body.author;
+
+    var latestBooks=books.filter((book)=>{
+        return book.id!=id;
+    })
+
+    latestBooks.push(currentBook);
+    res.send(latestBooks)
+})
+
+
 app.listen(5000,()=>{
     console.log("Server is started")
 })
