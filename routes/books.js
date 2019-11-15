@@ -1,10 +1,5 @@
 var express=require('express');
-var app=express();
-
-var bodyParser=require('body-parser');
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended:true}))
-
+var router=express.Router();
 //your data
 var books=[
     {
@@ -26,7 +21,7 @@ var books=[
 
 //
 
-app.route("/api/")
+router.route("/")
     .get((req,res)=>{
         res.send(books);
     })
@@ -37,7 +32,7 @@ app.route("/api/")
         res.send(books);
     })
 
-app.get("/api/books/search/:keyword",(req,res)=>{
+router.get("/search/:keyword",(req,res)=>{
     var keyword=req.params.keyword;
     var latestBooks=books.filter((book)=>{
         return book.title.includes(keyword);
@@ -46,7 +41,7 @@ app.get("/api/books/search/:keyword",(req,res)=>{
     res.send(latestBooks);
 })
 
-app.route("/api/books/:id")
+router.route("/:id")
     .get((req,res)=>{
         var id=req.params.id;
         var currentBook=books.find((book)=>{
@@ -80,7 +75,4 @@ app.route("/api/books/:id")
         res.send(latestBooks)
     })
 
-
-app.listen(5000,()=>{
-    console.log("Server is started")
-})
+module.exports=router;
